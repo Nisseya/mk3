@@ -9,8 +9,6 @@ use esp_idf_svc::{eventloop::EspSystemEventLoop, nvs::EspDefaultNvsPartition};
 
 use log::info;
 
-const SSID: &str = "Xiaomi13Ultra";
-const PASSWORD: &str = "Azer1234";
 
 fn main() -> anyhow::Result<()> {
     esp_idf_svc::sys::link_patches();
@@ -38,12 +36,12 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn connect_wifi(wifi: &mut BlockingWifi<EspWifi<'static>>) -> anyhow::Result<()> {
+fn connect_wifi(wifi: &mut BlockingWifi<EspWifi<'static>>, ssid:String<32>, password:String<32>) -> anyhow::Result<()> {
     let wifi_configuration: Configuration = Configuration::Client(ClientConfiguration {
-        ssid: SSID.try_into().unwrap(),
+        ssid: ssid,
         bssid: None,
         auth_method: AuthMethod::WPA2Personal,
-        password: PASSWORD.try_into().unwrap(),
+        password: password,
         channel: None,
         ..Default::default()
     });
